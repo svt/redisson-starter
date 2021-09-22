@@ -12,7 +12,7 @@ Files: *.yml
 Copyright: 2020 Sveriges Television AB
 License: CC0-1.0
 
-Files: *.gradle
+Files: *.gradle.kts
 Copyright: 2020 Sveriges Television AB
 License: CC0-1.0
 
