@@ -36,8 +36,6 @@ repositories {
 
 dependencies {
 
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation(kotlin("reflect"))
     implementation("io.github.microutils:kotlin-logging:1.7.4")
     implementation("org.springframework.boot:spring-boot:2.2.6.RELEASE")
     implementation("org.springframework.boot:spring-boot-autoconfigure:2.2.6.RELEASE")
