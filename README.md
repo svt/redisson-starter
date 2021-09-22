@@ -1,29 +1,29 @@
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/svt/redisson-starter)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![REUSE status](https://api.reuse.software/badge/git.fsfe.org/reuse/api)](https://api.reuse.software/info/git.fsfe.org/reuse/api)
 
-redisson-starter
-===
+
+# Redisson-starter
 
 Spring boot starter that configures a [redisson](https://github.com/redisson/redisson) client.
- In addition to configuring the redisson client, it also optionally provides additional services for working with
+In addition to configuring the redisson client, it also optionally provides additional services for working with
  redisson locks and queues:
  
  - **RedissonLockService**
- A service that provied a ```tryWithLock``` method that uses a redisson lock. A bean will be provided 
- if `redis.redisson.lock.name-prefix` property is set.
+ 	A service that provied a ```tryWithLock``` method that uses a redisson lock. 
+	A bean will be provided  if `redis.redisson.lock.name-prefix` property is set.
  - **RedissonLibQeueue**
-If `redis.redisson.queue.name property` is set, a redisson priority queue will be
-provided.
+	If `redis.redisson.queue.name property` is set, a redisson priority queue will be provided.
 
 This library is written in kotlin.
 
-### Usage ###
+## Usage ##
 
-Add the lib as a dependency to your build.gradle
+Add the lib as a dependency to your Gradle build file.
 
+```kotlin
+implementation("se.svt.oss:redisson-starter:1.1.0")
 ```
-implementation 'se.svt.oss:redisson-starter:1.1.0'
-```
-
 
 Configure in `application.yml` (or other property source) :
 
@@ -52,18 +52,18 @@ redissonLockService.tryWithLock(name = "my-other-lock",
 ```
 
 # Mocking the RedissonLockService with mockk
+
 Calling `RedissonLockService.tryWithLock` on a mockk object without specifiying all parameters will fail, because
-the default parameter values reference an instance field that will not be available. To get around this, a spy can
-be used instead:
-```
+the default parameter values reference an instance field that will not be available. 
+To get around this, a spy can be used instead:
+
+```kotlin
 private val redissonLockService = spyk(RedissonLockService(mockk(), mockk(relaxed = true)))
 ``` 
 
-### Contributing ###
-
 #### Tests ####
 
-run `./gradlew check` for unit tests and code quality checks
+run `./gradlew clean check` for unit tests and code quality checks
   
 ## License
 
