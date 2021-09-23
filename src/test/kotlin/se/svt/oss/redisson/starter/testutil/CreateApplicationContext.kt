@@ -4,8 +4,11 @@
 
 package se.svt.oss.redisson.starter.testutil
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
+import org.redisson.codec.JsonJacksonCodec
+import org.redisson.config.Config
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,7 +17,17 @@ import org.springframework.core.env.MapPropertySource
 @Configuration
 class ClientConfiguration {
     @Bean
-    fun redissonClient(): RedissonClient = Redisson.create()
+    fun redissonClient(): RedissonClient {
+        val objectMapper = ObjectMapper().findAndRegisterModules()
+        val config = Config()
+            .setCodec(JsonJacksonCodec(objectMapper))
+            .apply {
+                useSingleServer()
+                    .setDatabase(0)
+                    .setAddress("redis://localhost:" + System.getProperty("embedded-redis.port"))
+            }
+        return Redisson.create(config)
+    }
 }
 
 fun createApplicationContext(configuration: Class<*>, includeClientBean: Boolean, vararg properties: Pair<String, Any>) =

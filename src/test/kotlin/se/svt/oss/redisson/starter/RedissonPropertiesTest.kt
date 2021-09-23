@@ -5,13 +5,16 @@
 package se.svt.oss.redisson.starter
 
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
+import se.svt.oss.junit5.redis.EmbeddedRedisExtension
 import se.svt.oss.redisson.starter.Assertions.assertThat
 import se.svt.oss.redisson.starter.config.RedisProperties
 import se.svt.oss.redisson.starter.testutil.createApplicationContext
 import java.time.Duration
 
+@ExtendWith(EmbeddedRedisExtension::class)
 class RedissonPropertiesTest {
 
     @Test
