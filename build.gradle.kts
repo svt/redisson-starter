@@ -39,7 +39,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:1.7.4")
     implementation("org.springframework.boot:spring-boot:2.2.6.RELEASE")
     implementation("org.springframework.boot:spring-boot-autoconfigure:2.2.6.RELEASE")
-    api("org.redisson:redisson:3.14.1")
+    api("org.redisson:redisson:3.16.2")
     testImplementation("org.assertj:assertj-core:3.20.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.2.6.RELEASE")
     testImplementation("se.svt.oss:junit5-redis-extension:3.0.0")

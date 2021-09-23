@@ -5,43 +5,33 @@
 package se.svt.oss.redisson.starter
 
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
+import se.svt.oss.junit5.redis.EmbeddedRedisExtension
 import se.svt.oss.redisson.starter.Assertions.assertThat
 import se.svt.oss.redisson.starter.config.RedisProperties
 import se.svt.oss.redisson.starter.testutil.createApplicationContext
-import java.net.URI
 import java.time.Duration
 
+@ExtendWith(EmbeddedRedisExtension::class)
 class RedissonPropertiesTest {
 
     @Test
     fun `all redis properties are set correctly`() {
-        val db = 2
-        val uri = URI.create("redis://some-host:1234")
         val lockWaitTime = "10s"
         val lockLeaseTime = "30s"
         val lockName = "the-lock"
         val queueName = "queue"
         val timeout = "5s"
-        val connectionPoolSize = 12
-        val subscriptionConnectionPoolSize = 10
-        val subscriptionsPerConnection = 10
-        val connectionMinimumIdleSize = 8
-
         val context = createApplicationContext(
             OnlyPropertiesConfiguration::class.java,
-            "redis.db" to db.toString(),
-            "redis.uri" to uri,
-            "redis.connection-pool-size" to connectionPoolSize,
-            "redis.subscriptions-per-connection" to subscriptionsPerConnection,
-            "redis.subscription-connection-pool-size" to subscriptionConnectionPoolSize,
-            "redis.connection-minimum-idle-size" to connectionMinimumIdleSize,
-            "redis.redisson.timeout" to timeout,
+            true,
             "redis.redisson.lock.wait-time" to lockWaitTime,
             "redis.redisson.lock.lease-time" to lockLeaseTime,
             "redis.redisson.lock.name-prefix" to lockName,
-            "redis.redisson.queue.name" to queueName
+            "redis.redisson.queue.name" to queueName,
+            "redis.redisson.timeout" to timeout
         )
 
         val redisProperties = context.getBean(RedisProperties::class.java)
@@ -50,12 +40,6 @@ class RedissonPropertiesTest {
 
         assertThat(redisProperties)
             .isNotNull
-            .hasDb(db)
-            .hasUri(uri)
-            .hasConnectionMinimumIdleSize(connectionMinimumIdleSize)
-            .hasConnectionPoolSize(connectionPoolSize)
-            .hasSubscriptionsPerConnection(subscriptionsPerConnection)
-            .hasSubscriptionConnectionPoolSize(subscriptionConnectionPoolSize)
 
         assertThat(redisProperties.redisson)
             .hasTimeout(Duration.ofSeconds(5))
@@ -74,11 +58,9 @@ class RedissonPropertiesTest {
 
     @Test
     fun `not all redis properties are set`() {
-        val uri = URI.create("redis://some-host:1234")
-
         val context = createApplicationContext(
             OnlyPropertiesConfiguration::class.java,
-            "redis.uri" to uri
+            true
         )
 
         val redisProperties = context.getBean(RedisProperties::class.java)
@@ -87,11 +69,6 @@ class RedissonPropertiesTest {
 
         assertThat(redisProperties)
             .isNotNull
-            .hasDb(0)
-            .hasUri(uri)
-            .hasConnectionPoolSize(null)
-            .hasSubscriptionConnectionPoolSize(null)
-            .hasConnectionMinimumIdleSize(null)
 
         assertThat(redisProperties.redisson)
             .isNotNull

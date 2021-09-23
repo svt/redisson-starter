@@ -5,28 +5,14 @@
 package se.svt.oss.redisson.starter.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import java.net.URI
 import java.time.Duration
 
 @ConfigurationProperties("redis")
 class RedisProperties {
-    lateinit var uri: URI
-    var db = 0
-
-    var connectionPoolSize: Int? = null
-
-    var subscriptionConnectionPoolSize: Int? = null
-
-    var subscriptionsPerConnection: Int? = null
-
-    var connectionMinimumIdleSize: Int? = null
-
-    var dnsMonitoringInterval: Long? = null
-
     var redisson = RedissonProperties()
 
     override fun toString(): String {
-        return "RedisProperties(uri=$uri, db=$db, connectionPoolSize=$connectionPoolSize, subscriptionConnectionPoolSize=$subscriptionConnectionPoolSize, connectionMinimumIdleSize=$connectionMinimumIdleSize, redisson=$redisson)"
+        return "RedisProperties(redisson=$redisson)"
     }
 }
 

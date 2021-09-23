@@ -5,9 +5,8 @@
 
 # Redisson-starter
 
-Spring boot starter that configures a [redisson](https://github.com/redisson/redisson) client.
-In addition to configuring the redisson client, it also optionally provides additional services for working with
- redisson locks and queues:
+Spring boot starter that given a [redisson](https://github.com/redisson/redisson) client bean provides additional services for working with
+redisson locks and queues:
  
  - **RedissonLockService**
  	A service that provied a ```tryWithLock``` method that uses a redisson lock. 
@@ -22,7 +21,7 @@ This library is written in kotlin.
 Add the lib as a dependency to your Gradle build file.
 
 ```kotlin
-implementation("se.svt.oss:redisson-starter:1.1.0")
+implementation("se.svt.oss:redisson-starter:2.0.0")
 ```
 
 Configure in `application.yml` (or other property source) :
